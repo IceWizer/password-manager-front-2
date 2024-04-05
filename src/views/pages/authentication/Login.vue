@@ -1,44 +1,51 @@
 <template>
-    <div class="w-100 my-auto">
-        <h1 class="text-center">Connexion</h1>
-        <div class="w-50 mx-auto">
-            <div class="mt-2">
-                <label for="username">Name</label>
-                <input type="text" name="username" id="username" v-model="item.username"
-                    :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
-                    autocomplete="username" @focus="stateOn.username = true" />
-                <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
-                    {{ getErrorMessage(validators.username, item.username) }}
-                </p>
-            </div>
-            <div class="mt-2">
-                <label for="password">Mot de passe</label>
-                <div>
-                    <input :type="showPassword ? 'text' : 'password'" name="password" id="password"
-                        rules="required" v-model="item.password"
-                        :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
-                        autocomplete="current-password" @focus="stateOn.password = true" />
-                    <div>
+    <div class="flex justify-center ">
+        <div class="self-center my-auto">
+            <h1 class="text-center text-2xl">Connexion</h1>
+            <div class="w-full mx-auto">
+                <div class="my-5">
+                    <label class="input input-bordered flex items-center gap-2" for="username">
+                        <font-awesome-icon :icon="['fas', 'user']" />
+                        <input class="grow" type="text" placeholder="Nom" name="username" id="username"
+                            v-model="item.username"
+                            :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
+                            autocomplete="username" @focus="stateOn.username = true" />
+                    </label>
+                    <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
+                        {{ getErrorMessage(validators.username, item.username) }}
+                    </p>
+                </div>
+                <div class="my-5">
+                    <label for="password" class="input input-bordered flex items-center gap-2">
+                        <font-awesome-icon :icon="['fas', 'key']" />
+                        <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
+                            id="password" rules="required" class="grow" v-model="item.password"
+                            :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
+                            autocomplete="current-password" @focus="stateOn.password = true" />
                         <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
                             class="text-dark rounded-end">
-                            <b-icon-eye v-if="showPassword" />
-                            <b-icon-eye-slash v-else />
+                            <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
+                            <font-awesome-icon :icon="['fas', 'eye']"v-else  />
                         </button>
-                    </div>
+                    </label>
+
                     <p>
                         {{ getErrorMessage(validators.password, item.password) }}
                     </p>
                 </div>
             </div>
-            <div class="mt-2 mx-auto w-50">
-                <button class="w-100" type="submit" @click="loginCheck()">Connecte toi</button>
+            <div class="my-5 mx-auto text-center">
+                <button class="btn btn-primary" type="submit" @click="loginCheck()">Connexion</button>
             </div>
-            <div class="text-bg-danger mt-2 text-center rounded p-1" v-if="dataSent">
+            <div class="text-bg-danger my-5 text-center rounded p-1" v-if="dataSent">
                 L'identifiant ou le mot de passe est incorrect
             </div>
-        </div>
-        <div class="text-center mt-1">
-            <router-link to="register">Tu n'as pas de compte. Créer un compte</router-link>
+            <div class="text-center mt-1">
+                <p>
+                    Tu n'as pas de compte ?
+                    <router-link to="register"> Créer un compte </router-link>
+                </p>
+            </div>
         </div>
     </div>
 </template>
