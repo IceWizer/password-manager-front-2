@@ -4,7 +4,7 @@ services:
     image: node:21-bookworm
     volumes:
       - .:/app
-      - .docker/entrypoint.sh:/app/.docker/entrypoint.sh [ro]
+      - .docker/entrypoint.sh:/app/.docker/entrypoint.sh
     working_dir: /app
     ports:
       - "5173:5173"
