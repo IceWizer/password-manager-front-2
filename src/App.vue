@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import {RouterView} from 'vue-router';</script>
+import { RouterView } from 'vue-router';</script>
 
 <template>
     <header>
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125"/>
-
+        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+        <button class="btn">Button</button>
         <div class="wrapper">
-
+            <h1 class="text-3xl font-bold underline">
+                Hello world!
+            </h1>
             <nav>
                 <RouterLink to="/">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
@@ -14,7 +16,7 @@ import {RouterView} from 'vue-router';</script>
         </div>
     </header>
 
-    <RouterView/>
+    <RouterView />
 </template>
 
 <style scoped></style>

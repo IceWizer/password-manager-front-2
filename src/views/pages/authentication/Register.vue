@@ -5,7 +5,7 @@
             <form>
                 <div class="mt-2">
                     <label for="username">Name</label>
-                    <BFormInput
+                    <input
                         type="text"
                         name="username"
                         id="username"
@@ -20,7 +20,7 @@
                 </div>
                 <div class="mt-2">
                     <label for="email">Mail</label>
-                    <BFormInput
+                    <input
                         type="text"
                         name="email"
                         id="email"
@@ -35,8 +35,8 @@
                 </div>
                 <div class="mt-2">
                     <label for="password">Mot de passe</label>
-                    <BFormGroup>
-                        <BFormInput
+                    <div>
+                        <input
                             :type="showPassword ? 'text' : 'password'"
                             name="password"
                             id="password"
@@ -55,7 +55,7 @@
                         <p>
                             {{ getErrorMessage(validators.password, item.password) }}
                         </p>
-                    </BFormGroup>
+                    </div>
                 </div>
                 <div class="mt-2 mx-auto w-50">
                     <button class="w-100" type="submit" @click="registerCheck()">Créer ton compte</button>
@@ -73,11 +73,9 @@ import { useModules } from "@store/utils";
 import authStore from "@store/modules/authStore";
 import {onUnmounted} from "vue";
 import * as Yup from "yup";
-import {BFormGroup, BFormInput} from "bootstrap-vue-next";
 
 export default {
     name: "Register.vue",
-  components: {BFormGroup, BFormInput},
   data() {
         return {
             item: {

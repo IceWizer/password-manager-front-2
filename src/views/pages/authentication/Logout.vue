@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { logout } from "@/auth/utils/connection";
+import connection from "@/auth/utils/connection";
 
 export default {
     name: "Log-out",
@@ -21,7 +21,7 @@ export default {
         logout() {
             this.$store.dispatch('authStore/logout')
                 .then((response) => {
-                    logout();
+                    connection.logout();
                     this.$router.push({ name: 'login' });
                 })
                 .catch((error) => {
