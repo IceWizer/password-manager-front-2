@@ -25,7 +25,7 @@
                         <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
                             class="text-dark rounded-end">
                             <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
-                            <font-awesome-icon :icon="['fas', 'eye']"v-else  />
+                            <font-awesome-icon :icon="['fas', 'eye']" v-else  />
                         </button>
                     </label>
 
