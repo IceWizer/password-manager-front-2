@@ -1,69 +1,58 @@
 <template>
-    <div class="">
-        <div class="w-50 mx-auto">
-            <h1 class="text-center">Création de compte</h1>
-            <form>
-                <div class="mt-2">
-                    <label for="username">Name</label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        v-model="item.username"
-                        :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
-                        autocomplete="username"
-                        @focus="stateOn.username = true"
-                    />
-                    <p>
-                        {{ getErrorMessage(validators.username, item.username) }}
-                    </p>
-                </div>
-                <div class="mt-2">
-                    <label for="email">Mail</label>
-                    <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        v-model="item.email"
-                        :state="stateOn.email ? validators.email.isValidSync(item.email) : null"
-                        autocomplete="email"
-                        @focus="stateOn.email = true"
-                    />
-                    <p>
-                        {{ getErrorMessage(validators.email, item.email) }}
-                    </p>
-                </div>
-                <div class="mt-2">
-                    <label for="password">Mot de passe</label>
-                    <div>
-                        <input
-                            :type="showPassword ? 'text' : 'password'"
-                            name="password"
-                            id="password"
-                            rules="required"
-                            v-model="item.password"
-                            :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
-                            autocomplete="current-password"
-                            @focus="stateOn.password = true"
-                        />
-                        <div>
-                            <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary" class="text-dark rounded-end">
-                                <b-icon-eye v-if="showPassword" />
-                                <b-icon-eye-slash v-else />
+    <div class="flex justify-center ">
+        <div class="self-center my-auto">
+            <h1 class="text-center text-2xl">Inscription</h1>
+            <form action="">
+                <div class="w-full mx-auto">
+                    <div class="my-5">
+
+                        <label class="input input-bordered flex items-center gap-2" for="username">
+                            <font-awesome-icon :icon="['fas', 'user']" />
+                            <input class="grow" type="text" placeholder="Nom" name="username" id="username"
+                            v-model="item.username"
+                            :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
+                            autocomplete="username" @focus="stateOn.username = true" required/>
+                        </label>
+                        <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
+                            {{ getErrorMessage(validators.username, item.username) }}
+                        </p>
+                    </div>
+                    <div class="my-5">
+                        <label class="input input-bordered flex items-center gap-2" for="email">
+                            <font-awesome-icon :icon="['fas', 'envelope']" />
+                            <input class="grow" type="text" placeholder="Email" name="email" id="email" v-model="item.email"
+                            :state="stateOn.email ? validators.email.isValidSync(item.email) : null" autocomplete="email"
+                            @focus="stateOn.email = true" required/>
+                        </label>
+                        <p>
+                            {{ getErrorMessage(validators.email, item.email) }}
+                        </p>
+                    </div>
+                    <div class="my-5">
+                        <label for="password" class="input input-bordered flex items-center gap-2">
+                            <font-awesome-icon :icon="['fas', 'key']" />
+                            <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
+                                id="password" rules="required" class="grow" v-model="item.password"
+                                :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
+                                autocomplete="current-password" @focus="stateOn.password = true" required/>
+                            <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
+                                class="text-dark rounded-end">
+                                <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
+                                <font-awesome-icon :icon="['fas', 'eye']" v-else />
                             </button>
-                        </div>
+                        </label>
                         <p>
                             {{ getErrorMessage(validators.password, item.password) }}
                         </p>
                     </div>
                 </div>
-                <div class="mt-2 mx-auto w-50">
-                    <button class="w-100" type="submit" @click="registerCheck()">Créer ton compte</button>
+                <div class="my-5 mx-auto w-50 text-center">
+                    <button class="w-100 btn btn-primary" type="submit" @click="registerCheck()">Créer ton compte</button>
+                </div>
+                <div class="text-center mt-1">
+                    <router-link to="login">J'ai déjà un compte</router-link>
                 </div>
             </form>
-            <div class="text-center mt-1">
-                <router-link to="login">Déjà un compte</router-link>
-            </div>
         </div>
     </div>
 </template>
@@ -71,12 +60,12 @@
 <script>
 import { useModules } from "@store/utils";
 import authStore from "@store/modules/authStore";
-import {onUnmounted} from "vue";
+import { onUnmounted } from "vue";
 import * as Yup from "yup";
 
 export default {
-    name: "Register.vue",
-  data() {
+    name: "Auth_Register",
+    data() {
         return {
             item: {
                 username: '',
@@ -90,15 +79,15 @@ export default {
             },
             validators: {
                 username: Yup.string()
-                            .min(3, 'Username doit contenir au minimum 3 caractères')
-                            .required('Le champ username est obligatoire'),
+                    .min(3, 'Username doit contenir au minimum 3 caractères')
+                    .required('Le champ username est obligatoire'),
                 email: Yup.string()
-                            .email('L\'email doit être valide')
-                            .required('Le champ email est obligatoire'),
+                    .email('L\'email doit être valide')
+                    .required('Le champ email est obligatoire'),
                 password: Yup.string()
-                            .min(8, 'Le mot de passe doit avoir au minimum 8 caractères')
-                            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)')
-                            .required('Le champ password est obligatoire')
+                    .min(8, 'Le mot de passe doit avoir au minimum 8 caractères')
+                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)')
+                    .required('Le champ mot de passe est obligatoire')
             },
 
             showPassword: false,
@@ -107,19 +96,7 @@ export default {
         }
     },
     setup() {
-        const modules = [
-            {
-                store: authStore,
-            }
-        ]
-        const { umount } = useModules(modules);
-
-        onUnmounted(() => {
-            umount();
-        });
-
         return {
-            modules,
             Yup
         }
     },
@@ -140,7 +117,7 @@ export default {
         sendRegister() {
             this.$store.dispatch('auth_store/register', this.item)
                 .then(() => {
-                    this.$router.push({name: 'login'});
+                    this.$router.push({ name: 'login' });
                 });
         },
         getErrorMessage(validator, itemToValidate) {
@@ -155,6 +132,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Logout</h1>
+    <div class=" content-center">
+        <h1>Déconnexion</h1>
     </div>
 </template>
 

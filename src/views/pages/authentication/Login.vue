@@ -9,7 +9,7 @@
                         <input class="grow" type="text" placeholder="Nom" name="username" id="username"
                             v-model="item.username"
                             :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
-                            autocomplete="username" @focus="stateOn.username = true" />
+                            autocomplete="username" @focus="stateOn.username = true" required/>
                     </label>
                     <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
                         {{ getErrorMessage(validators.username, item.username) }}
@@ -21,29 +21,28 @@
                         <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
                             id="password" rules="required" class="grow" v-model="item.password"
                             :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
-                            autocomplete="current-password" @focus="stateOn.password = true" />
+                            autocomplete="current-password" @focus="stateOn.password = true" required/>
                         <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
                             class="text-dark rounded-end">
                             <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
-                            <font-awesome-icon :icon="['fas', 'eye']"v-else  />
+                            <font-awesome-icon :icon="['fas', 'eye']" v-else />
                         </button>
                     </label>
-
                     <p>
                         {{ getErrorMessage(validators.password, item.password) }}
                     </p>
                 </div>
             </div>
+            <div class="text-bg-danger my-5 text-center rounded p-1" v-if="dataSent">
+                L'identifiant ou le mot de passe est <div class="text-error">incorrect</div> 
+            </div>
             <div class="my-5 mx-auto text-center">
                 <button class="btn btn-primary" type="submit" @click="loginCheck()">Connexion</button>
-            </div>
-            <div class="text-bg-danger my-5 text-center rounded p-1" v-if="dataSent">
-                L'identifiant ou le mot de passe est incorrect
             </div>
             <div class="text-center mt-1">
                 <p>
                     Tu n'as pas de compte ?
-                    <router-link to="register"> Créer un compte </router-link>
+                    <router-link to="register" class="text-primary"> Créer un compte </router-link>
                 </p>
             </div>
         </div>
@@ -67,8 +66,8 @@ export default {
                 password: false,
             },
             validators: {
-                username: Yup.string().min(3, 'Username doit contenir au minimum 3 caractères').required('Le champ username est obligatoire'),
-                password: Yup.string().required('Le champ password est obligatoire'),
+                username: Yup.string(),
+                password: Yup.string(),
             },
 
             showPassword: false,
