@@ -1,6 +1,7 @@
 <template>
-    <div class="m-auto">
+    <div class="text-center gap-2">
         <h1>Déconnexion</h1>
+        <span class="loading loading-spinner loading-lg"></span>
     </div>
 </template>
 

@@ -1,7 +1,6 @@
-<template class="h-full" >
+<template class="my-auto" >
     <Navbar v-if="showNavbar" />
     <RouterView class=" my-auto"/>
-    <Modal />
 </template>
 
 <style scoped></style>
@@ -18,7 +17,7 @@ export default {
   computed: {
     showNavbar() {
       // Liste des chemins où la navbar ne doit pas être affichée
-      const noNavbarRoutes = ['/login', '/register'];
+      const noNavbarRoutes = ['/login', '/register', '/forgotten-password'];
       return !noNavbarRoutes.includes(this.$route.path);
     }
   }
