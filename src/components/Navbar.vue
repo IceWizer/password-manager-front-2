@@ -16,11 +16,11 @@
                         </div>
                         <ul tabindex="0"
                             class="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li>
+                            <!-- <li>
                                 <a>
                                     <font-awesome-icon :icon="['fas', 'user']" />Profil
                                 </a>
-                            </li>
+                            </li> -->
                             <li>
                                 <RouterLink to="/logout">
                                     <font-awesome-icon :icon="['fas', 'right-from-bracket']" />Déconnexion
