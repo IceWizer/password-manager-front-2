@@ -4,15 +4,14 @@
             <h1 class="text-center text-2xl">Connexion</h1>
             <div class="w-full mx-auto ">
                 <div class="my-5">
-                    <label class="input input-bordered flex items-center gap-2" for="username">
+                    <label class="input input-bordered flex items-center gap-2" for="email">
                         <font-awesome-icon :icon="['fas', 'user']" />
-                        <input class="grow" type="text" placeholder="Email" name="username" id="username"
-                            v-model="item.username"
-                            :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
-                            autocomplete="username" @focus="stateOn.username = true" required />
+                        <input class="grow" type="text" placeholder="Email" name="email" id="email" v-model="item.email"
+                            :state="stateOn.email ? validators.email.isValidSync(item.email) : null"
+                            autocomplete="email" @focus="stateOn.email = true" required />
                     </label>
-                    <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
-                        {{ getErrorMessage(validators.username, item.username) }}
+                    <p v-if="stateOn.email && !validators.email.isValidSync(item.email)">
+                        {{ getErrorMessage(validators.email, item.email) }}
                     </p>
                 </div>
                 <div class="my-5">
@@ -62,15 +61,15 @@ export default {
     data() {
         return {
             item: {
-                username: '',
+                email: '',
                 password: ''
             },
             stateOn: {
-                username: false,
+                email: false,
                 password: false,
             },
             validators: {
-                username: Yup.string(),
+                email: Yup.string(),
                 password: Yup.string(),
             },
 
