@@ -2,7 +2,6 @@
     <div class="flex h-full justify-center items-center">
         <div class="self-center">
             <h1 class="text-center text-2xl">Inscription</h1>
-            <form action="">
                 <div class="w-full mx-auto">
                     <div class="my-5">
                         <label class="input input-bordered flex items-center gap-2" for="email">
@@ -39,13 +38,12 @@
                     </div>
                 </div>
                 <div class="my-5 mx-auto w-50 text-center">
-                    <button class="w-100 btn btn-primary" type="submit" @click="registerCheck()">Créer ton
+                    <button class="w-100 btn btn-primary" type="submit" @submit.prevent @click="registerCheck()">Créer ton
                         compte</button>
                 </div>
                 <div class="text-center mt-1">
                     <router-link to="login">J'ai déjà un compte</router-link>
                 </div>
-            </form>
         </div>
     </div>
 </template>

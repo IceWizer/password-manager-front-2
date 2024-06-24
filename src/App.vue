@@ -17,7 +17,7 @@ export default {
   computed: {
     showNavbar() {
       // Liste des chemins où la navbar ne doit pas être affichée
-      const noNavbarRoutes = ['/login', '/register', '/forgotten-password', '/verify-email'];
+      const noNavbarRoutes = ['/login', '/register', '/forgotten-password', '/verify-email', '/reset-password'];
       return !noNavbarRoutes.includes(this.$route.path);
     }
   }

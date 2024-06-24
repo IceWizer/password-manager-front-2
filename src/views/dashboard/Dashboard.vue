@@ -10,46 +10,48 @@
                 </RouterLink>
             </button>
         </div>
-        <div class="collapse bg-base-200 w-96  shadow-xl"  v-for="password in passwords">
-            <input type="radio" name="accordeon-password"/>
-            <div class="collapse-title text-xl font-medium">TestMDP{{ password?.label }}</div>
-            <div class="collapse-content ">
-                <input class="input input-bordered input-disabled mx-2" type="password" value="Password">
-                <div class="tooltip" data-tip="Copier">
-                    <button class=" mx-2"><font-awesome-icon :icon="['fas', 'copy']" /></button>
+        <CardPassword v-for="password in passwords" :key="password.id" :password="password" @open-modal="openModal" />
+    </div>
+
+    <!-- DaisyUI Modal -->
+    <div v-if="selectedPassword" id="ModalShare" class="modal modal-open" role="dialog">
+        <div class="modal-box">
+            <button @click="closeModal" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <h2 class="font-bold text-lg">Partager {{ this.selectedPassword.label }}</h2>
+            <div class="text-center flex flex-col m-5">
+                <div class="tooltip" data-tip="Ajouter">
+                    <button class="btn btn-primary " @click="addInput"><font-awesome-icon
+                            :icon="['fas', 'plus']" /></button>
                 </div>
-                <div class="tooltip" data-tip="Voir">
-                    <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
-                        class="text-dark rounded-end mx-2">
-                        <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
-                        <font-awesome-icon :icon="['fas', 'eye']" v-else />
-                    </button>
-                    <div class="tooltip" data-tip="Partager">
-                        <button class=" mx-2"><font-awesome-icon :icon="['fas', 'share-from-square']" /></button>
-                    </div>
+                <div v-for="(input, index) in dynamicInputs" :key="index" class="py-2">
+                    <label for="emailShare" class="input input-bordered flex items-center gap-2">
+                        <font-awesome-icon :icon="['fas', 'envelope']" />
+                        <input v-model="input.value" id="emailShare" placeholder="Email">
+                    </label>
                 </div>
+                <select class="select select-bordered m-5" name="" id="">
+                    <option value="null">Indéfiniment</option>
+                    <option value="3600">1 heure</option>
+                    <option value="43200">1 jour</option>
+                    <option value="302400">1 semaine</option>
+                    <option value="1339200">1 mois</option>
+                </select>
             </div>
+            <button class="btn btn-primary">Valider</button>
         </div>
-
-            <!-- <button class="card w-96 bg-base-200 shadow-xl" v-for="password in passwords"
-                @click="showPassword(password)">
-                <div class="card-body">
-                    <h2 class="card-title">{{ password?.label }}</h2>
-                </div>
-            </button> -->
-
-        </div>
+    </div>
 </template>
 
 <script lang="ts">
 import * as Yup from "yup";
+import CardPassword from '@/components/CardPassword.vue'
 export default {
     name: "DashboardView",
     mounted() {
         //this.$store.dispatch('getTest');
     },
     components: {
-        // ModalPassword
+        CardPassword
     },
     data() {
         return {
@@ -68,22 +70,38 @@ export default {
                 comment: Yup.string(),
                 password: Yup.string().required,
             },
-            passwords: [],
+            passwords: [
+                { id: 1, label: 'Password 1' },
+                { id: 2, label: 'Password 2' },
+                // plus de mots de passe
+            ],
             showPassword: false,
-            newLabel: ''
+            newLabel: '',
+            selectedPassword: null,
+            dynamicInputs: []
         }
     },
     methods: {
-        addPassword() {
-            // this.$store.dispatch('activities_store/createItem', {label: this.$data.newLabel})
-            //     .then(() => {
-            //         this.fetchActivities();
-            //         // Clear the input
-            //         this.newLabel = '';
-            //     })
-            // // Hide the modal
-            // this.hideModal();
+        openModal(password) {
+            this.selectedPassword = password;
         },
-    }
+        closeModal() {
+            this.selectedPassword = null;
+            this.dynamicInputs = [];
+        },
+        addInput() {
+            this.dynamicInputs.push({ value: '' });  // Ajouter un nouvel input dynamique
+        }
+        // addPassword() {
+        // this.$store.dispatch('activities_store/createItem', {label: this.$data.newLabel})
+        //     .then(() => {
+        //         this.fetchActivities();
+        //         // Clear the input
+        //         this.newLabel = '';
+        //     })
+        // // Hide the modal
+        // this.hideModal();
+        // },
+    },
 }
 </script>
