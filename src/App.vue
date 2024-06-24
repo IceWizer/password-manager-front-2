@@ -1,6 +1,7 @@
 <template class="h-full" >
     <Navbar v-if="showNavbar" />
-    <RouterView class=" mt-60 my-auto"/>
+    <RouterView class=" my-auto"/>
+    <Modal />
 </template>
 
 <style scoped></style>

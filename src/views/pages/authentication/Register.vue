@@ -67,10 +67,8 @@ export default {
                 password: false,
             },
             validators: {
-                email: Yup.string()
-                    .email('L\'email doit être valide')
-                    .required('Le champ email est obligatoire'),
-                password: Yup.string()
+                email: Yup.string(),
+                password: Yup.string(),
             },
 
             showPassword: false,
