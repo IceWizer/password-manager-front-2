@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center">
+    <div class="flex h-full justify-center items-center">
         <div class="self-center my-auto">
             <h1 class="text-center text-2xl">Connexion</h1>
             <div class="w-full mx-auto ">

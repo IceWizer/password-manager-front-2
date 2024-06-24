@@ -39,10 +39,7 @@
 
 <script>
 import * as Yup from "yup";
-// import { MdEditor } from "@/components/MdEditor.vue";
-import { ref } from 'vue';
 
-const text = ref('# Hello Editor');
 export default {
     name: "PasswordView",
     mounted() {

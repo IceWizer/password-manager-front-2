@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center ">
-        <div class="self-center my-auto">
+    <div class="flex h-full justify-center items-center">
+        <div class="self-center">
             <h1 class="text-center text-2xl">Inscription</h1>
             <form action="">
                 <div class="w-full mx-auto">

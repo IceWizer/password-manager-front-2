@@ -1,12 +1,20 @@
 <template>
-    <div>
-        <h1>Forgot Password</h1>
-        <p v-if="emailSended">An email has been sent to you with instructions on how to reset your password.</p>
-        <form @submit.prevent="submitForm" v-if="emailSended === false">
-            <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" required>
-            <button type="submit">Reset Password</button>
-        </form>
+    <div class="flex justify-center items-center h-full">
+        <div class="self-center my-auto">
+            <h1 class="text-center text-2xl">Mot de passe oublié</h1>
+            <div class="w-full mx-auto ">
+                <div class="my-5">
+                    <form class="w-full text-center" @submit.prevent="submitForm" v-if="emailSended === false">
+                        <p v-if="emailSended">Un email vous sera envoyé afin de changer votre mot de passe</p>
+                        <label for="email" class="input input-bordered flex items-center gap-2">
+                            <font-awesome-icon :icon="['fas', 'envelope']" />
+                            <input type="email" placeholder="Email" id="email" v-model="email" required>
+                        </label>
+                        <button class="btn btn-primary m-5" type="submit">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
