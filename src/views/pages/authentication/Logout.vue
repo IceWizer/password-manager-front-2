@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         logout() {
-            this.$store.dispatch('authStore/logout')
+            this.$store.dispatch('auth_store/logout')
                 .then((response) => {
                     connection.logout();
                     this.$router.push({ name: 'login' });

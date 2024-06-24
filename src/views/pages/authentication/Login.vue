@@ -1,8 +1,8 @@
 <template>
-    <div class="flex justify-center ">
+    <div class="flex justify-center">
         <div class="self-center my-auto">
             <h1 class="text-center text-2xl">Connexion</h1>
-            <div class="w-full mx-auto">
+            <div class="w-full mx-auto ">
                 <div class="my-5">
                     <label class="input input-bordered flex items-center gap-2" for="username">
                         <font-awesome-icon :icon="['fas', 'user']" />
@@ -43,6 +43,10 @@
                 <p>
                     Tu n'as pas de compte ?
                     <router-link to="register" class="text-primary"> Créer un compte </router-link>
+                </p>
+                <p>
+                    Mot de passe
+                    <router-link to="register" class="text-primary"> oublié </router-link> ?
                 </p>
             </div>
         </div>

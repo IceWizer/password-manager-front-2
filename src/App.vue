@@ -1,43 +1,25 @@
-<template>
-    <header>
-        <div class="navbar bg-base-100">
-            <div class="navbar bg-base-100">
-                <div class="flex-1">
-                    <RouterLink to="/"><font-awesome-icon :icon="['fas', 'fingerprint']" size="2xl"
-                            class=" text-primary" />
-                    </RouterLink>
-                </div>
-                <div class="flex-none">
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                            <div class="w-10 rounded-full">
-                                <font-awesome-icon :icon="['fas', 'bars']" size="xl" />
-                            </div>
-                        </div>
-                        <ul tabindex="0"
-                            class="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li>
-                                <a>
-                                    <font-awesome-icon :icon="['fas', 'user']" />Profil
-                                </a>
-                            </li>
-                            <li>
-                                <RouterLink to="/logout">
-                                    <font-awesome-icon :icon="['fas', 'right-from-bracket']" />Déconnexion
-                                </RouterLink>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <RouterView class=" h-full" />
+<template class="h-full" >
+    <Navbar v-if="showNavbar" />
+    <RouterView class=" mt-60 my-auto"/>
 </template>
 
 <style scoped></style>
 
 <script lang="ts">
 import { RouterView } from 'vue-router';
+
+import Navbar from './components/Navbar.vue';
+
+export default {
+  components: {
+    Navbar
+  },
+  computed: {
+    showNavbar() {
+      // Liste des chemins où la navbar ne doit pas être affichée
+      const noNavbarRoutes = ['/login', '/register'];
+      return !noNavbarRoutes.includes(this.$route.path);
+    }
+  }
+};
 </script>
