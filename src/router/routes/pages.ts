@@ -50,16 +50,6 @@ const routes = [
         }
     },
     {
-        path: '/password',
-        name: 'password',
-        component: () => import('@/views/pages/Password.vue'),
-        meta: {
-            requiresAuth: true,
-            redirectIfLoggedIn: false,
-            layout: 'default'
-        }
-    },
-    {
         path: '/forgotten-password',
         name: 'forgotten-password',
         component: () => import('@/views/pages/authentication/ForgotPassword.vue'),

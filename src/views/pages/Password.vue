@@ -1,12 +1,13 @@
 <template>
     <div class="flex justify-center">
         <div class="self-center my-auto">
-            <h1 class="text-center text-2xl font-bold my-10">Ajouter un mot de passe</h1>
+            <h1 class="text-center text-2xl font-bold my-10">{{ !!$route.params.id === false ? "Ajouter" : "Editer" }}
+                un mot de passe</h1>
             <div class="w-full mx-auto ">
                 <div class=" my-5">
                     <label for="label" class="input input-bordered flex items-center gap-2">
                         <font-awesome-icon :icon="['fas', 'pen']" />
-                        <input class="grow" placeholder="Label" id="label" name="label" v-model="newLabel">
+                        <input class="grow" placeholder="Label" id="label" name="label" v-model="item.label">
                     </label>
                 </div>
                 <div class="my-5">
@@ -23,10 +24,11 @@
                     </label>
                 </div>
                 <div class="my-5">
-                    <textarea class="textarea textarea-bordered w-full" placeholder="Commentaire"></textarea>
+                    <textarea class="textarea textarea-bordered w-full" placeholder="Commentaire"
+                        v-model="item.comment"></textarea>
                 </div>
                 <div>
-                    <button class="btn btn-primary text-center" @click="addPassword">Ajouter</button>
+                    <button class="btn btn-primary text-center" @click="save">Ajouter</button>
                 </div>
             </div>
         </div>
@@ -39,8 +41,6 @@
 import * as Yup from "yup";
 // import { MdEditor } from "@/components/MdEditor.vue";
 import { ref } from 'vue';
-import { MdEditor } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
 
 const text = ref('# Hello Editor');
 export default {
@@ -50,7 +50,6 @@ export default {
     },
     components: {
         // ModalPassword
-        MdEditor
     },
     data() {
         return {
@@ -71,19 +70,38 @@ export default {
             },
             passwords: [],
             showPassword: false,
-            newLabel: ''
         }
     },
     methods: {
-        addPassword() {
-            // this.$store.dispatch('activities_store/createItem', {label: this.$data.newLabel})
-            //     .then(() => {
-            //         this.fetchActivities();
-            //         // Clear the input
-            //         this.newLabel = '';
-            //     })
-            // // Hide the modal
-            // this.hideModal();
+        fetch() {
+            if (!!this.$route.params.id === true) {
+                this.$store.dispatch('passwords_store/fetchItem', { id: this.$route.params.id })
+                    .then((response) => {
+                        console.log("fetchItem", response);
+                    })
+                    .catch(() => {
+
+                    });
+            }
+        },
+        save() {
+            if (!!this.$route.params.id === true) {
+                this.$store.dispatch('passwords_store/updateItem', { ...this.item })
+                    .then((response) => {
+                        console.log("fetchItem", response);
+                    })
+                    .catch(() => {
+
+                    });
+            } else {
+                this.$store.dispatch('passwords_store/createItem', { ...this.item })
+                    .then((response) => {
+                        console.log("fetchItem", response);
+                    })
+                    .catch(() => {
+
+                    });
+            }
         },
     }
 }

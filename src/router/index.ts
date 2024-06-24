@@ -1,11 +1,13 @@
 import useUserData from '@/auth/utils/useUserData';
 import pages from '@/router/routes/pages';
 import { createRouter, createWebHistory } from 'vue-router';
+import password from '@/router/routes/password';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         ...pages,
+        ...password,
         {
             path: "/:pathMatch(.*)*",
             redirect: "error-404"

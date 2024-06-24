@@ -64,7 +64,7 @@ export default (modelName) => {
     },
     actions: {
       fetchItems({ commit }, payload) {
-        return new apiRequest(
+        return apiRequest(
           modelName,
           'GET',
           (response) => {
@@ -79,7 +79,7 @@ export default (modelName) => {
         params = { ...payload }
         delete params.id
 
-        return new apiRequest(
+        return apiRequest(
           modelName + '/' + payload.id,
           'GET',
           (response) => {
@@ -89,7 +89,7 @@ export default (modelName) => {
         )
       },
       createItem({ commit }, payload) {
-        return new apiRequest(
+        return apiRequest(
           modelName,
           'POST',
           (response) => {
@@ -99,7 +99,7 @@ export default (modelName) => {
         )
       },
       updateItem({ commit }, payload) {
-        return new apiRequest(
+        return apiRequest(
           modelName + '/' + payload.id,
           'PUT',
           (response) => {
@@ -109,7 +109,7 @@ export default (modelName) => {
         )
       },
       deleteItem({ commit }, payload) {
-        return new apiRequest(
+        return apiRequest(
           modelName + '/' + payload.id,
           'DELETE',
           (response) => {

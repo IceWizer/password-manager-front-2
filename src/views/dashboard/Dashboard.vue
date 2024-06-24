@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-wrap gap-10 justify-center p-5">
-        <button class="card w-96 bg-base-200 shadow-xl" v-for="password in passwords" @click="showPassword(password)">
+        <button class="card w-96 bg-base-200 shadow-xl" v-for="password in passwords" @click="showPassword(password)"
+            :key="password.id">
             <div class="card-body">
                 <h2 class="card-title">{{ password?.label }}</h2>
             </div>
@@ -19,22 +20,32 @@
 </template>
 
 <script lang="ts">
+import Password from "@/models/password";
 import * as Yup from "yup";
 export default {
     name: "DashboardView",
     mounted() {
-        //this.$store.dispatch('getTest');
+        this.fetch();
     },
     components: {
         // ModalPassword
     },
-    data() {
+    data(): {
+        item: Password,
+        stateOn: {
+            label: boolean,
+            comment: boolean,
+            password: boolean,
+        },
+        validators: {
+            label: any,
+            comment: any,
+            password: any,
+        },
+        passwords: Password[],
+    } {
         return {
-            item: {
-                label: '',
-                comment: '',
-                password: ''
-            },
+            item: new Password(),
             stateOn: {
                 label: false,
                 comment: false,
@@ -45,22 +56,20 @@ export default {
                 comment: Yup.string(),
                 password: Yup.string().required,
             },
-            passwords:[],
-            showPassword: false,
-            newLabel: ''
+            passwords: [],
         }
     },
     methods: {
-        addPassword() {
-            // this.$store.dispatch('activities_store/createItem', {label: this.$data.newLabel})
-            //     .then(() => {
-            //         this.fetchActivities();
-            //         // Clear the input
-            //         this.newLabel = '';
-            //     })
-            // // Hide the modal
-            // this.hideModal();
+        fetch() {
+            this.$store.dispatch('passwords_store/fetchItems')
+                .then((response: Password[]) => {
+                    this.passwords = response;
+                    console.log("fetchItems", response, this.passwords);
+                })
         },
+        showPassword(password: Password) {
+            this.item = password;
+        }
     }
 }
 </script>
