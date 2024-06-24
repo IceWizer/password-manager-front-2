@@ -14,6 +14,8 @@ const apiRequest = (
 ) => {
     url = env.API_URL + url;
 
+    console.log("url", url);
+
     if (!['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
         method = 'GET';
     }
@@ -50,3 +52,4 @@ const apiRequest = (
 export {
     apiRequest
 };
+
