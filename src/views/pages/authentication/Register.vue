@@ -2,50 +2,47 @@
     <div class="flex h-full justify-center items-center">
         <div class="self-center">
             <h1 class="text-center text-2xl">Inscription</h1>
-            <form action="">
-                <div class="w-full mx-auto">
-                    <div class="my-5">
-                        <label class="input input-bordered flex items-center gap-2" for="email">
-                            <font-awesome-icon :icon="['fas', 'envelope']" />
-                            <input class="grow" type="text" placeholder="Email" name="email" id="email"
-                                v-model="item.email"
-                                :state="stateOn.email ? validators.email.isValidSync(item.email) : null"
-                                autocomplete="email" @focus="stateOn.email = true" required />
-                        </label>
-                        <p>
-                            {{ getErrorMessage(validators.email, item.email) }}
-                        </p>
-                    </div>
-                    <div class="my-5">
-                        <label for="password" class="input input-bordered flex items-center gap-2">
-                            <font-awesome-icon :icon="['fas', 'key']" />
-                            <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
-                                id="password" rules="required" class="grow" v-model="item.password"
-                                :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
-                                autocomplete="current-password" @focus="stateOn.password = true" required />
-                            <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
-                                class="text-dark rounded-end">
-                                <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
-                                <font-awesome-icon :icon="['fas', 'eye']" v-else />
-                            </button>
-                        </label>
-                        Temps pour trouver le mot de passe : <span class="text-error">{{
-                            passwordStrength(item.password).value }}</span><a
-                            href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/"
-                            target="_blank">*</a>
-                        <p>
-                            {{ getErrorMessage(validators.password, item.password) }}
-                        </p>
-                    </div>
+            <div class="w-full mx-auto">
+                <div class="my-5">
+                    <label class="input input-bordered flex items-center gap-2" for="email">
+                        <font-awesome-icon :icon="['fas', 'envelope']" />
+                        <input class="grow" type="text" placeholder="Email" name="email" id="email" v-model="item.email"
+                            :state="stateOn.email ? validators.email.isValidSync(item.email) : null"
+                            autocomplete="email" @focus="stateOn.email = true" required />
+                    </label>
+                    <p>
+                        {{ getErrorMessage(validators.email, item.email) }}
+                    </p>
                 </div>
-                <div class="my-5 mx-auto w-50 text-center">
-                    <button class="w-100 btn btn-primary" type="submit" @click="registerCheck()">Créer ton
-                        compte</button>
+                <div class="my-5">
+                    <label for="password" class="input input-bordered flex items-center gap-2">
+                        <font-awesome-icon :icon="['fas', 'key']" />
+                        <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
+                            id="password" rules="required" class="grow" v-model="item.password"
+                            :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
+                            autocomplete="current-password" @focus="stateOn.password = true" required />
+                        <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
+                            class="text-dark rounded-end">
+                            <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
+                            <font-awesome-icon :icon="['fas', 'eye']" v-else />
+                        </button>
+                    </label>
+                    Temps pour trouver le mot de passe : <span class="text-error">{{
+                        passwordStrength(item.password).value }}</span><a
+                        href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/"
+                        target="_blank"></a>
+                    <p>
+                        {{ getErrorMessage(validators.password, item.password) }}
+                    </p>
                 </div>
-                <div class="text-center mt-1">
-                    <router-link to="login">J'ai déjà un compte</router-link>
-                </div>
-            </form>
+            </div>
+            <div class="my-5 mx-auto w-50 text-center">
+                <button class="w-100 btn btn-primary" type="submit" @submit.prevent @click="registerCheck()">Créer ton
+                    compte</button>
+            </div>
+            <div class="text-center mt-1">
+                <router-link to="login">J'ai déjà un compte</router-link>
+            </div>
         </div>
     </div>
 </template>
