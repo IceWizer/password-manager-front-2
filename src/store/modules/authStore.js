@@ -25,6 +25,30 @@ export default ({
                 payload
             )
         },
+        verifyEmail({ commit }, payload) {
+            return apiRequest(
+                `auth/verify-email/${payload.token}`,
+                'POST',
+                null,
+                null
+            )
+        },
+        forgotPassword({ commit }, payload) {
+            return apiRequest(
+                `auth/forgot-password`,
+                'POST',
+                null,
+                payload
+            )
+        },
+        resetPassword({ commit }, payload) {
+            return apiRequest(
+                `auth/reset-password/${payload.token}`,
+                'POST',
+                null,
+                { password: payload.password }
+            )
+        },
         logout({ commit }) {
             return apiRequest(
                 'auth/logout',
