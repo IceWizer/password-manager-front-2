@@ -30,6 +30,16 @@ const routes = [
         }
     },
     {
+        path: '/verify-email/:token',
+        name: 'verify-email',
+        component: () => import('@/views/pages/authentication/VerifyEmail.vue'),
+        meta: {
+            requiresAuth: false,
+            redirectIfLoggedIn: true,
+            layout: 'full'
+        }
+    },
+    {
         path: '/logout',
         name: 'logout',
         component: () => import('@/views/pages/authentication/Logout.vue'),

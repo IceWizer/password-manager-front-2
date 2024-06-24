@@ -6,10 +6,10 @@
                 <div class="my-5">
                     <label class="input input-bordered flex items-center gap-2" for="username">
                         <font-awesome-icon :icon="['fas', 'user']" />
-                        <input class="grow" type="text" placeholder="Nom" name="username" id="username"
+                        <input class="grow" type="text" placeholder="Email" name="username" id="username"
                             v-model="item.username"
                             :state="stateOn.username ? validators.username.isValidSync(item.username) : null"
-                            autocomplete="username" @focus="stateOn.username = true" required/>
+                            autocomplete="username" @focus="stateOn.username = true" required />
                     </label>
                     <p v-if="stateOn.username && !validators.username.isValidSync(item.username)">
                         {{ getErrorMessage(validators.username, item.username) }}
@@ -21,7 +21,7 @@
                         <input :type="showPassword ? 'text' : 'password'" placeholder="Mot de passe" name="password"
                             id="password" rules="required" class="grow" v-model="item.password"
                             :state="stateOn.password ? validators.password.isValidSync(item.password) : null"
-                            autocomplete="current-password" @focus="stateOn.password = true" required/>
+                            autocomplete="current-password" @focus="stateOn.password = true" required />
                         <button @click="showPassword = !showPassword" size="sm" variant="outline-secondary"
                             class="text-dark rounded-end">
                             <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="text-bg-danger my-5 text-center rounded p-1" v-if="dataSent">
-                L'identifiant ou le mot de passe est <div class="text-error">incorrect</div> 
+                {{ errorMessage }}
             </div>
             <div class="my-5 mx-auto text-center">
                 <button class="btn btn-primary" type="submit" @click="loginCheck()">Connexion</button>
@@ -76,6 +76,7 @@ export default {
 
             showPassword: false,
             dataSent: false,
+            errorMessage: "L'identifiant ou le mot de passe est incorrect",
         }
     },
     setup() {
@@ -105,7 +106,18 @@ export default {
                     this.$router.push({ name: 'dashboard' });
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.log(error.response.status);
+                    switch (error.response.status) {
+                        case 401:
+                            this.errorMessage = "L'identifiant ou le mot de passe est incorrect";
+                            break;
+                        case 403:
+                            this.errorMessage = "L'email n'est pas vérifié";
+                            break;
+                        default:
+                            this.errorMessage = "L'identifiant ou le mot de passe est incorrect";
+                            break;
+                    }
                 })
                 .finally(() => {
                     this.dataSent = true;

@@ -25,6 +25,14 @@ export default ({
                 payload
             )
         },
+        verifyEmail({ commit }, payload) {
+            return apiRequest(
+                `auth/verify-email/${payload.token}`,
+                'POST',
+                null,
+                null
+            )
+        },
         logout({ commit }) {
             return apiRequest(
                 'auth/logout',
