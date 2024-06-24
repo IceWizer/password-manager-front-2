@@ -50,6 +50,26 @@ const routes = [
         }
     },
     {
+        path: '/forgotten-password',
+        name: 'forgotten-password',
+        component: () => import('@/views/pages/authentication/ForgotPassword.vue'),
+        meta: {
+            requiresAuth: false,
+            redirectIfLoggedIn: true,
+            layout: 'full'
+        }
+    },
+    {
+        path: '/reset-password/:token',
+        name: 'reset-password',
+        component: () => import('@/views/pages/authentication/ResetPassword.vue'),
+        meta: {
+            requiresAuth: false,
+            redirectIfLoggedIn: true,
+            layout: 'full'
+        }
+    },
+    {
         path: '/error-404',
         name: 'error-404',
         component: () => import('@/views/pages/miscellaneous/Error404.vue'),

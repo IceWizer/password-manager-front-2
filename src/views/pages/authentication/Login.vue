@@ -46,7 +46,7 @@
                 </p>
                 <p>
                     Mot de passe
-                    <router-link to="register" class="text-primary"> oublié </router-link> ?
+                    <router-link to="forgotten-password" class="text-primary"> oublié </router-link> ?
                 </p>
             </div>
         </div>
