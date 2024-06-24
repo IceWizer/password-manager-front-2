@@ -15,7 +15,7 @@
             <div class="collapse-title text-xl font-medium">{{ password?.label }}</div>
             <div class="collapse-content ">
                 <input class="input input-bordered input-disabled mx-2" :type="showPassword ? 'text' : 'password'"
-                    :value="password.password ?? 'Password'">
+                    :value="showPassword ? password.password ?? 'Password' : 'Password'">
                 <div class="tooltip" data-tip="Copier">
                     <button class=" mx-2" :onclick="() => copyPassword(password)"><font-awesome-icon
                             :icon="['fas', 'copy']" /></button>
@@ -32,14 +32,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <button class="card w-96 bg-base-200 shadow-xl" v-for="password in passwords"
-                @click="showPassword(password)">
-                <div class="card-body">
-                    <h2 class="card-title">{{ password?.label }}</h2>
-                </div>
-            </button> -->
-
     </div>
 </template>
 
