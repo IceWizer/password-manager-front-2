@@ -1,6 +1,7 @@
 <template>
-    <h1>Dashboard</h1>
-    <p>Test</p>
+    <div class="content-center">
+        <h1>Dashboard</h1>
+    </div>
 </template>
 
 <script>
