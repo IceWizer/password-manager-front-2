@@ -46,7 +46,9 @@
         </div>
     </header>
 
-    <RouterView class=" h-full" />
+    <div class="bg-base-300 m-10 p-3 rounded-xl" style="min-height: 600px">
+        <RouterView class=" h-full" />
+    </div>
 </template>
 
 <style scoped></style>
