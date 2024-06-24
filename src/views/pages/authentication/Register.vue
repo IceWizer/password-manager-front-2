@@ -78,16 +78,9 @@ export default {
                 password: false,
             },
             validators: {
-                username: Yup.string()
-                    .min(3, 'Username doit contenir au minimum 3 caractères')
-                    .required('Le champ username est obligatoire'),
-                email: Yup.string()
-                    .email('L\'email doit être valide')
-                    .required('Le champ email est obligatoire'),
-                password: Yup.string()
-                    .min(8, 'Le mot de passe doit avoir au minimum 8 caractères')
-                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)')
-                    .required('Le champ mot de passe est obligatoire')
+                username: Yup.string(),
+                email: Yup.string(),
+                password: Yup.string(),
             },
 
             showPassword: false,

@@ -1,5 +1,5 @@
 <template>
-    <div class=" content-center">
+    <div class="m-auto">
         <h1>Déconnexion</h1>
     </div>
 </template>

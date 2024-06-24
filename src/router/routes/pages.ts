@@ -40,6 +40,16 @@ const routes = [
         }
     },
     {
+        path: '/password',
+        name: 'password',
+        component: () => import('@/views/pages/Password.vue'),
+        meta: {
+            requiresAuth: true,
+            redirectIfLoggedIn: false,
+            layout: 'default'
+        }
+    },
+    {
         path: '/error-404',
         name: 'error-404',
         component: () => import('@/views/pages/miscellaneous/Error404.vue'),
