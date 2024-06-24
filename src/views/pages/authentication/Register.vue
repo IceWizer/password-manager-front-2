@@ -29,6 +29,10 @@
                                 <font-awesome-icon :icon="['fas', 'eye']" v-else />
                             </button>
                         </label>
+                        Temps pour trouver le mot de passe : <span class="text-error">{{
+                            passwordStrength(item.password).value }}</span><a
+                            href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/"
+                            target="_blank">*</a>
                         <p>
                             {{ getErrorMessage(validators.password, item.password) }}
                         </p>
@@ -48,6 +52,7 @@
 
 <script>
 import * as Yup from "yup";
+import passwordStrength from '@/utils/passwordStrength'
 
 export default {
     name: "Auth_Register",
@@ -66,9 +71,6 @@ export default {
                     .email('L\'email doit être valide')
                     .required('Le champ email est obligatoire'),
                 password: Yup.string()
-                    .min(8, 'Le mot de passe doit avoir au minimum 8 caractères')
-                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).*$/, 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)')
-                    .required('Le champ mot de passe est obligatoire')
             },
 
             showPassword: false,
@@ -78,7 +80,8 @@ export default {
     },
     setup() {
         return {
-            Yup
+            Yup,
+            passwordStrength
         }
     },
     methods: {

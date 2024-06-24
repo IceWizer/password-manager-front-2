@@ -4,12 +4,17 @@
         <form @submit.prevent="resetPassword">
             <label for="new-password">New Password:</label>
             <input type="password" id="new-password" v-model="password" required>
+            Temps pour trouver le mot de passe : <span class="text-error">{{
+                passwordStrength(item.password).value }}</span><a
+                href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/" target="_blank">*</a>
             <button type="submit">Reset</button>
         </form>
     </div>
 </template>
 
 <script>
+import { passwordStrength } from 'check-password-strength'
+
 export default {
     data() {
         return {
