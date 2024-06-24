@@ -37,12 +37,7 @@
 
 <script>
 import * as Yup from "yup";
-// import { MdEditor } from "@/components/MdEditor.vue";
-import { ref } from 'vue';
-import { MdEditor } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
 
-const text = ref('# Hello Editor');
 export default {
     name: "PasswordView",
     mounted() {
@@ -50,7 +45,6 @@ export default {
     },
     components: {
         // ModalPassword
-        MdEditor
     },
     data() {
         return {
