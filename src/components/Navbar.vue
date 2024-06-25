@@ -21,6 +21,11 @@
                                     <font-awesome-icon :icon="['fas', 'user']" />Profil
                                 </a>
                             </li> -->
+                            <li v-if="isAdmin">
+                                <a>
+                                    <font-awesome-icon :icon="['fas', 'key']" />Liste des mots de passe
+                                </a>
+                            </li>
                             <li>
                                 <RouterLink to="/logout">
                                     <font-awesome-icon :icon="['fas', 'right-from-bracket']" />Déconnexion
@@ -34,8 +39,14 @@
     </header>
 </template>
 
-<script>
+<script lang="ts">
+import utils from '@/auth/utils';
+
 export default {
-  name: 'Navbar'
+    name: 'NavBar',
+    setup() {
+        const isAdmin: Boolean = utils.useUserData.isUserAdmin();
+        return { isAdmin };
+    },
 };
 </script>

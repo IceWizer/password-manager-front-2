@@ -14,6 +14,23 @@ store.actions.fetchItems = ({ commit }, payload) => {
     )
 };
 
+store.actions.fetchSharedItems = ({ commit }, payload) => {
+    return apiRequest(
+        `${model}/shared`,
+        'GET',
+        null,
+        payload
+    )
+};
+store.actions.fetchItems = ({ commit }, payload) => {
+    return apiRequest(
+        model,
+        'GET',
+        null,
+        payload
+    )
+};
+
 store.actions.showPassword = ({ commit }, payload) => {
     return apiRequest(
         `${model}/${payload.id}/1234`,

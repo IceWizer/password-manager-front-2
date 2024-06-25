@@ -11,14 +11,17 @@
             </button>
         </div>
         <CardPassword v-for="password in passwords" :key="password.id ?? '0'" :password="password"
-            @open-modal="openModal" />
+            @open-modal="() => { openModal(password) }" />
     </div>
+    <h2>Mots de passe partagés</h2>
+    <CardPassword v-for="password in sharedPasswords" :key="password.id ?? '0'" :password="password"
+        @open-modal="() => { openModal(password) }" :canEdit="false" />
 
     <!-- DaisyUI Modal -->
     <div v-if="selectedPassword" id="ModalShare" class="modal modal-open" role="dialog">
         <div class="modal-box">
             <button @click="closeModal" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            <h2 class="font-bold text-lg">Partager {{ this.selectedPassword.label }}</h2>
+            <h2 class="font-bold text-lg">Partager {{ selectedPassword.label }}</h2>
             <div class="text-center flex flex-col m-5">
                 <div class="tooltip" data-tip="Ajouter">
                     <button class="btn btn-primary " @click="addInput"><font-awesome-icon
@@ -30,7 +33,7 @@
                         <input v-model="input.value" id="emailShare" placeholder="Email">
                     </label>
                 </div>
-                <select class="select select-bordered m-5" name="" id="">
+                <select class="select select-bordered m-5" v-model="expiration">
                     <option value="null">Indéfiniment</option>
                     <option value="3600">1 heure</option>
                     <option value="43200">1 jour</option>
@@ -38,15 +41,15 @@
                     <option value="1339200">1 mois</option>
                 </select>
             </div>
-            <button class="btn btn-primary">Valider</button>
+            <button class="btn btn-primary" @click="sharePassword">Valider</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import CardPassword from '@/components/CardPassword.vue';
 import Password from "@/models/password";
 import * as Yup from "yup";
-import CardPassword from '@/components/CardPassword.vue'
 export default {
     name: "DashboardView",
     mounted() {
@@ -68,7 +71,11 @@ export default {
             password: any,
         },
         passwords: Password[],
+        sharedPasswords: Password[],
         showPassword: boolean,
+        selectedPassword: Password | null,
+        dynamicInputs: any[],
+        expiration: number | null,
     } {
         return {
             item: new Password(),
@@ -82,19 +89,26 @@ export default {
                 comment: Yup.string(),
                 password: Yup.string().required,
             },
-            passwords: [
-                { id: 1, label: 'Password 1' },
-                { id: 2, label: 'Password 2' },
-                // plus de mots de passe
-            ],
+            passwords: [],
+            sharedPasswords: [],
             showPassword: false,
-            newLabel: '',
             selectedPassword: null,
-            dynamicInputs: []
+            dynamicInputs: [],
+            expiration: null,
         }
     },
     methods: {
-        openModal(password) {
+        fetch() {
+            this.$store.dispatch('passwords_store/fetchItems')
+                .then((response: Password[]) => {
+                    this.passwords = response;
+                });
+            this.$store.dispatch('passwords_store/fetchSharedItems')
+                .then((response: Password[]) => {
+                    this.sharedPasswords = response;
+                });
+        },
+        openModal(password: Password) {
             this.selectedPassword = password;
         },
         closeModal() {
@@ -103,17 +117,13 @@ export default {
         },
         addInput() {
             this.dynamicInputs.push({ value: '' });  // Ajouter un nouvel input dynamique
+        },
+        sharePassword() {
+            this.$store.dispatch('shares_store/createItems', { password: this.selectedPassword.id, emails: this.dynamicInputs, expiration: this.expiration })
+                .then(() => {
+                    this.closeModal();
+                });
         }
-        // addPassword() {
-        // this.$store.dispatch('activities_store/createItem', {label: this.$data.newLabel})
-        //     .then(() => {
-        //         this.fetchActivities();
-        //         // Clear the input
-        //         this.newLabel = '';
-        //     })
-        // // Hide the modal
-        // this.hideModal();
-        // },
     },
 }
 </script>

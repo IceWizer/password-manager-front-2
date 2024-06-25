@@ -22,13 +22,21 @@
                             <font-awesome-icon :icon="['fas', 'eye']" v-else />
                         </button>
                     </label>
+                    <span v-if="item.id === null || !!item.password === true">
+                        Temps pour trouver le mot de passe : <span class="text-error">{{
+                            passwordStrength(item.password ?? "").value }}</span><a
+                            href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/"
+                            target="_blank"></a>
+                    </span>
                 </div>
                 <div class="my-5">
                     <textarea class="textarea textarea-bordered w-full" placeholder="Commentaire"
                         v-model="item.comment"></textarea>
                 </div>
                 <div>
-                    <button class="btn btn-primary text-center" @click="save">Ajouter</button>
+                    <button class="btn btn-primary text-center" @click="save">
+                        {{ !!$route.params.id === false ? "Ajouter" : "Editer" }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -36,25 +44,27 @@
     </div>
 </template>
 
-
-<script>
+<script lang="ts">
+import Password from "@/models/password";
+import passwordStrength from '@/utils/passwordStrength';
 import * as Yup from "yup";
 
 export default {
     name: "PasswordView",
     mounted() {
-        //this.$store.dispatch('getTest');
+        this.fetch();
     },
     components: {
         // ModalPassword
     },
+    setup() {
+        return {
+            passwordStrength
+        }
+    },
     data() {
         return {
-            item: {
-                label: '',
-                comment: '',
-                password: ''
-            },
+            item: new Password(),
             stateOn: {
                 label: false,
                 comment: false,
@@ -73,8 +83,8 @@ export default {
         fetch() {
             if (!!this.$route.params.id === true) {
                 this.$store.dispatch('passwords_store/fetchItem', { id: this.$route.params.id })
-                    .then((response) => {
-                        console.log("fetchItem", response);
+                    .then((response: Password) => {
+                        this.item = response;
                     })
                     .catch(() => {
 
@@ -84,16 +94,16 @@ export default {
         save() {
             if (!!this.$route.params.id === true) {
                 this.$store.dispatch('passwords_store/updateItem', { ...this.item })
-                    .then((response) => {
-                        console.log("fetchItem", response);
+                    .then(() => {
+                        this.$router.push({ name: 'dashboard' });
                     })
                     .catch(() => {
 
                     });
             } else {
                 this.$store.dispatch('passwords_store/createItem', { ...this.item })
-                    .then((response) => {
-                        console.log("fetchItem", response);
+                    .then(() => {
+                        this.$router.push({ name: 'dashboard' });
                     })
                     .catch(() => {
 
