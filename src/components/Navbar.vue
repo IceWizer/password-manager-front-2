@@ -25,9 +25,9 @@
                                 </RouterLink>
                             </li>
                             <li v-if="isAdmin">
-                                <a>
+                                <RouterLink :to="{ name: 'admin-passwords' }">
                                     <font-awesome-icon :icon="['fas', 'key']" />Liste des mots de passe
-                                </a>
+                                </RouterLink>
                             </li>
                             <li>
                                 <RouterLink to="/logout">

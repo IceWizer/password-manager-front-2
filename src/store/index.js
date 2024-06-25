@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 
+import adminStore from './modules/adminStore'
 import appStore from './modules/app'
 import authStore from './modules/authStore'
 import passwordStore from './modules/passwordStore'
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     [personStore.name]: personStore.store,
     [passwordStore.name]: passwordStore.store,
     [shareStore.name]: shareStore.store,
+    admin_store: adminStore,
   }
 })

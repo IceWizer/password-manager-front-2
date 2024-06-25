@@ -35,10 +35,12 @@
 </template>
 
 <script>
+import Password from '@/models/password';
+
 export default {
     name: "CardPassword",
     props: {
-        password: Object,
+        password: Password,
         canEdit: {
             type: Boolean,
             default: true
