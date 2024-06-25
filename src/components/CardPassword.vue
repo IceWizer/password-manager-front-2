@@ -6,29 +6,35 @@
             <div class="flex">
 
                 <input class="input input-bordered input-disabled mx-2" :type="showPassword ? 'text' : 'password'"
-                :value="showPassword ? password.password : 'password'">
-                <div class="grid grid-cols-4  my-auto">
+                    :value="showPassword ? password.password : 'password'">
+                <div class="grid grid-cols-5  my-auto">
                     <div class="tooltip" data-tip="Copier" v-if="canSee">
-                    <button class=" mx-2" @click="copyPassword"><font-awesome-icon :icon="['fas', 'copy']" /></button>
-                </div>
-                <div class="tooltip" data-tip="Voir" v-if="canSee">
-                    <button @click="showPasswordMethod" size="sm" variant="outline-secondary"
-                    class="text-dark rounded-end mx-2">
-                    <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
-                        <font-awesome-icon :icon="['fas', 'eye']" v-else />
-                    </button>
-                </div>
-                <div class="tooltip" data-tip="Modifier" v-if="canEdit">
-                    <button class="mx-2"><font-awesome-icon :icon="['fas', 'edit']" @click="edit" /></button>
-                </div>
-                <div class="tooltip" data-tip="Partager" v-if="canEdit">
-                    <button class="mx-2" @click="openModal"><font-awesome-icon
-                        :icon="['fas', 'share-from-square']" /></button>
+                        <button class=" mx-2" @click="copyPassword"><font-awesome-icon
+                                :icon="['fas', 'copy']" /></button>
+                    </div>
+                    <div class="tooltip" data-tip="Voir" v-if="canSee">
+                        <button @click="showPasswordMethod" size="sm" variant="outline-secondary"
+                            class="text-dark rounded-end mx-2">
+                            <font-awesome-icon :icon="['fas', 'eye-slash']" v-if="showPassword" />
+                            <font-awesome-icon :icon="['fas', 'eye']" v-else />
+                        </button>
+                    </div>
+                    <div class="tooltip" data-tip="Modifier" v-if="canEdit">
+                        <button class="mx-2"><font-awesome-icon :icon="['fas', 'edit']" @click="edit" /></button>
+                    </div>
+                    <div class="tooltip" data-tip="Partager" v-if="canEdit">
+                        <button class="mx-2" @click="openModal">
+                            <font-awesome-icon :icon="['fas', 'share-from-square']" /></button>
+                    </div>
+                    <div class="tooltip" data-tip="Supprimer" v-if="canEdit">
+                        <button class="mx-2" @click="deletePassword">
+                            <font-awesome-icon :icon="['fas', 'trash']" />
+                        </button>
                     </div>
                 </div>
             </div>
             <div v-if="password.comment" class="my-2">
-                <p >{{ password.comment }}</p>
+                <p>{{ password.comment }}</p>
             </div>
         </div>
     </div>
@@ -85,6 +91,12 @@ export default {
         edit() {
             this.$router.push({ name: 'password-create-edit', params: { id: this.password.id } });
         },
+        deletePassword() {
+            this.$store.dispatch('passwords_store/deleteItem', { id: this.password.id })
+                .then(() => {
+                    this.$store.dispatch('passwords_store/fetchItems');
+                });
+        }
     }
 }
 </script>
