@@ -12,7 +12,7 @@
     <h1 v-if="passwords" class="text-center text-2xl font-bold mt-10 mb-5">Mes mots de passe</h1>
     <div class="grid grid-cols-3 gap-10 justify-center p-5">
         <CardPassword v-for="password in passwords" :key="password.id ?? '0'" :password="password"
-            @open-modal="() => { openModal(password) }" />
+            @open-modal="() => { openModal(password) }" @fetch="fetch" />
     </div>
     <h1 v-if="sharedPasswords" class="text-center text-2xl font-bold mt-10 mb-5">Mots de passe partagés</h1>
     <div class="grid grid-cols-3 gap-10 justify-center p-5">

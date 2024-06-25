@@ -94,7 +94,7 @@ export default {
         deletePassword() {
             this.$store.dispatch('passwords_store/deleteItem', { id: this.password.id })
                 .then(() => {
-                    this.$store.dispatch('passwords_store/fetchItems');
+                    this.$emit('fetch');
                 });
         }
     }
