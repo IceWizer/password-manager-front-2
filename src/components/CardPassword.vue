@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="password.comment">
+            <div v-if="password.comment" class="my-2">
                 <p >{{ password.comment }}</p>
             </div>
         </div>

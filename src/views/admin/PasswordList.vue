@@ -1,9 +1,13 @@
 <template>
-    <h1>Liste des mots de passe</h1>
-    <div>
-        <CardPassword v-for="password in passwords" :key="password.id ?? '0'" :password="password" :canEdit="false"
-            :canSee="false" />
-    </div>
+    <h1 class="text-center text-2xl font-bold mt-10 mb-5">Liste des mots de passe</h1>
+    <div class="flex  flex-wrap gap-10 justify-center p-5 ">
+            <div  class="grid grid-cols-4 gap-10 justify-center p-5">
+                <CardPassword v-for="password in passwords" :key="password.id ?? '0'" :password="password"
+                    :canEdit="false" :canSee="false" />
+            </div>
+        </div>
+
+
 </template>
 
 <script lang="ts">
