@@ -15,12 +15,15 @@
                             </div>
                         </div>
                         <ul tabindex="0"
-                            class="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <!-- <li>
-                                <a>
-                                    <font-awesome-icon :icon="['fas', 'user']" />Profil
-                                </a>
-                            </li> -->
+                            class="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            <div class="m-3">
+                                <span class=""><font-awesome-icon :icon="['fas', 'user']" /> {{ email }}</span>
+                            </div>
+                            <li>
+                                <RouterLink to="/">
+                                    <font-awesome-icon :icon="['fas', 'house']" />Accueil
+                                </RouterLink>
+                            </li>
                             <li v-if="isAdmin">
                                 <a>
                                     <font-awesome-icon :icon="['fas', 'key']" />Liste des mots de passe
@@ -46,7 +49,8 @@ export default {
     name: 'NavBar',
     setup() {
         const isAdmin: Boolean = utils.useUserData.isUserAdmin();
-        return { isAdmin };
+        const email: String = utils.useUserData.getUserData().email;
+        return { isAdmin, email };
     },
 };
 </script>

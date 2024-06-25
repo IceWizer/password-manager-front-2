@@ -1,21 +1,26 @@
 <template>
-    <div class="flex flex-wrap gap-10 justify-center p-5">
+    <div class="flex text-center flex-wrap gap-10 justify-center p-5 ">
         <div class="card w-1/5 bg-base-200 shadow-xl">
             <button class="card-body flex flex-row ">
-                <div class="content-center">
+                <div class="content-center text-center">
                     <font-awesome-icon size="2xl" :icon="['fas', 'circle-plus']" />
                 </div>
                 <RouterLink to="/password">
-                    <h2 class="card-title">Ajouter un mot de passe</h2>
+                    <h2 class="card-title ">Ajouter</h2>
                 </RouterLink>
             </button>
         </div>
+    </div>
+    <h1 v-if="passwords" class="text-center text-2xl font-bold mt-10 mb-5">Mes mots de passe</h1>
+    <div  class="grid grid-cols-3 gap-10 justify-center p-5">
         <CardPassword v-for="password in passwords" :key="password.id ?? '0'" :password="password"
             @open-modal="() => { openModal(password) }" />
     </div>
-    <h2>Mots de passe partagés</h2>
+    <h1 v-if="sharedPasswords" class="text-center text-2xl font-bold mt-10 mb-5">Mots de passe partagés</h1>
+    <div  class="grid grid-cols-3 gap-10 justify-center p-5">
     <CardPassword v-for="password in sharedPasswords" :key="password.id ?? '0'" :password="password"
         @open-modal="() => { openModal(password) }" :canEdit="false" />
+    </div>
 
     <!-- DaisyUI Modal -->
     <div v-if="selectedPassword" id="ModalShare" class="modal modal-open" role="dialog">
