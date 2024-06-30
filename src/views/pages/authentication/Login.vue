@@ -52,13 +52,34 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import connection from "@/auth/utils/connection";
 import * as Yup from "yup";
 
+interface Data {
+    item: {
+        email: string;
+        password: string;
+    };
+    stateOn: {
+        email: boolean;
+        password: boolean;
+        [key: string]: boolean; // Add index signature
+    };
+    validators: {
+        email: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">;
+        password: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">;
+        [x: string]: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">; // Add index signature
+    };
+    showPassword: boolean;
+    dataSent: boolean;
+    errorMessage: string;
+
+}
+
 export default {
     name: "Log-in",
-    data() {
+    data(): Data {
         return {
             item: {
                 email: '',
@@ -99,12 +120,12 @@ export default {
         },
         sendLogin() {
             this.$store.dispatch('auth_store/login', this.item)
-                .then((response) => {
+                .then((response: any) => {
                     console.log()
                     connection.login(response.token);
                     this.$router.push({ name: 'dashboard' });
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     console.log(error.response.status);
                     switch (error.response.status) {
                         case 401:
@@ -122,11 +143,11 @@ export default {
                     this.dataSent = true;
                 });
         },
-        getErrorMessage(validator, itemToValidate) {
+        getErrorMessage(validator: any, itemToValidate: any) {
             try {
                 validator.validateSync(itemToValidate);
                 return null;
-            } catch (err) {
+            } catch (err: any) {
                 return err.message;
             }
         }

@@ -1,6 +1,7 @@
 import { apiRequest } from '../axios'
+import type { CrudBaseStore } from '@store/utils/types'
 
-export default (modelName) => {
+export default (modelName: string) : CrudBaseStore => {
   return {
     name: modelName + '_store',
     namespaced: true,
@@ -19,8 +20,8 @@ export default (modelName) => {
         // Find items in state.items that are in payload
         // and update them
         // Set updated items to state.items
-        state.items = state.items.map((item) => {
-          let updatedItem = payload['hydra:member'].find((p) => p.id === item.id)
+        state.items = state.items.map((item: any) => {
+          const updatedItem = payload['hydra:member'].find((p: any) => p.id === item.id)
           if (updatedItem) {
             return updatedItem
           }
@@ -28,8 +29,8 @@ export default (modelName) => {
         })
 
         // Add items to state.items that are not in state.items
-        payload['hydra:member'].forEach((item) => {
-          if (!state.items.find((i) => i.id === item.id)) {
+        payload['hydra:member'].forEach((item: any) => {
+          if (!state.items.find((i: any) => i.id === item.id)) {
             state.items.push(item)
           }
         })
@@ -42,19 +43,19 @@ export default (modelName) => {
         }
         state.pagination.total = payload['hydra:totalItems']
       },
-      SET_ITEM(state, payload = { id: this.$router.params.id }) {
+      SET_ITEM(state, payload) {
         // Find item in state.items that is in payload
         // and update it
         // Set updated item to state.item
         state.item = payload
 
-        let updatedItem = state.items.find((item) => item.id === payload.id)
+        let updatedItem = state.items.find((item: any) => item.id === payload.id)
         if (updatedItem) {
           updatedItem = payload
         }
 
         // Update items in state.items
-        state.items = state.items.map((item) => {
+        state.items = state.items.map((item: any) => {
           if (item.id === payload.id) {
             return payload
           }
@@ -67,7 +68,7 @@ export default (modelName) => {
         return apiRequest(
           modelName,
           'GET',
-          (response) => {
+          (response: any) => {
             commit('SET_ITEMS', response.data)
           },
           payload
@@ -75,14 +76,13 @@ export default (modelName) => {
       },
       fetchItem({ commit }, payload) {
         // Delete id from payload
-        let params
-        params = { ...payload }
+        const params = { ...payload }
         delete params.id
 
         return apiRequest(
           modelName + '/' + payload.id,
           'GET',
-          (response) => {
+          (response: any) => {
             commit('SET_ITEM', response.data)
           },
           params
@@ -92,7 +92,7 @@ export default (modelName) => {
         return apiRequest(
           modelName,
           'POST',
-          (response) => {
+          (response: any) => {
             commit('SET_ITEM', response.data)
           },
           payload
@@ -102,7 +102,7 @@ export default (modelName) => {
         return apiRequest(
           modelName + '/' + payload.id,
           'PUT',
-          (response) => {
+          (response: any) => {
             commit('SET_ITEM', response.data)
           },
           payload
@@ -112,7 +112,7 @@ export default (modelName) => {
         return apiRequest(
           modelName + '/' + payload.id,
           'DELETE',
-          (response) => {
+          (response: any) => {
             commit('SET_ITEM', response.data)
           },
           payload

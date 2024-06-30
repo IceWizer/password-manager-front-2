@@ -11,7 +11,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     methods: {
         verifyEmail() {
@@ -20,10 +20,10 @@ export default {
 
             // Send a request to the backend with the token in the route
             this.$store.dispatch('auth_store/verifyEmail', { token: token })
-                .then(response => {
+                .then((response: any) => {
                     this.$router.push({ name: "login" });
                 })
-                .catch(error => {
+                .catch((error: any) => {
                     console.error('An error occurred while verifying email:', error);
                 });
         }

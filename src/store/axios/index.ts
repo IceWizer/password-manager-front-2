@@ -1,22 +1,30 @@
 import axios from "axios";
 import useJwt from "../../auth/utils/useJwt";
+interface CustomWindow extends Window {
+    env: {
+      API_URL: string;
+    };
+  }
+  
+  declare const window: CustomWindow;
 
 const apiRequest = (
     url: string,
     method: string = 'GET',
-    onSuccess = () => { },
-    data = null,
-    headers =
+    onSuccess: Function|null = () => { },
+    data: any = null,
+    headers: { [key: string]: string } =
         {
             'accept': 'application/ld+json',
             'Authorization': 'Bearer ' + useJwt.getJwt(),
         }
 ) => {
-    url = env.API_URL + url;
+    
+    url = window.env.API_URL + url;
 
-    console.log("url", url);
+    const methods: string[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 
-    if (!['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+    if (!methods.includes(method)) {
         method = 'GET';
     }
 
@@ -38,11 +46,11 @@ const apiRequest = (
             data: data,
             headers
         })
-            .then((response) => {
+            .then((response: any) => {
                 onSuccess && onSuccess(response);
                 resolve(response.data['hydra:member'] || response.data || response);
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 reject(error);
             });
     }

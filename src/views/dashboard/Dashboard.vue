@@ -122,7 +122,7 @@ export default {
             this.dynamicInputs.push({ value: '' });  // Ajouter un nouvel input dynamique
         },
         sharePassword() {
-            this.$store.dispatch('shares_store/createItems', { password: this.selectedPassword.id, emails: this.dynamicInputs, expiration: this.expiration })
+            this.$store.dispatch('shares_store/createItems', { password: this.selectedPassword?.id, emails: this.dynamicInputs, expiration: this.expiration })
                 .then(() => {
                     this.closeModal();
                 });

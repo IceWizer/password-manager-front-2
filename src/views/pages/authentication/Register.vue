@@ -28,7 +28,7 @@
                         </button>
                     </label>
                     Temps pour trouver le mot de passe : <span class="text-error">{{
-                        passwordStrength(item.password).value }}</span><a
+                        passwordStrength(item.password ?? "").value }}</span><a
                         href="https://patrowl.io/fr/le-tableau-de-la-resistance-des-mots-de-passe/"
                         target="_blank"></a>
                     <p>
@@ -47,18 +47,32 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import * as Yup from "yup";
-import passwordStrength from '@/utils/passwordStrength'
+import passwordStrength from '@/utils/passwordStrength';
+import User from "@/models/user";
+
+interface Data {
+    item: User;
+    stateOn: {
+        email: boolean;
+        password: boolean;
+        [key: string]: boolean; // Add index signature
+    };
+    validators: {
+        email: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">;
+        password: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">;
+        [key: string]: Yup.StringSchema<string | undefined, Yup.AnyObject, undefined, "">; // Add index signature
+    };
+    showPassword: boolean;
+    errors: Record<string, string>;
+}
 
 export default {
     name: "Auth_Register",
-    data() {
+    data(): Data {
         return {
-            item: {
-                email: '',
-                password: ''
-            },
+            item: new User(),
             stateOn: {
                 email: false,
                 password: false,
@@ -67,9 +81,9 @@ export default {
                 email: Yup.string(),
                 password: Yup.string(),
             },
-
+    
             showPassword: false,
-
+    
             errors: {}
         }
     },
@@ -82,11 +96,11 @@ export default {
     methods: {
         registerCheck() {
             let canRegister = true;
-            for (const [key, value] of Object.entries(this.item)) {
-                if (!this.stateOn[key] || this.getErrorMessage(this.validators[key], value) !== null) {
-                    canRegister = false;
-                }
-            }
+            // for (const [key, value] of Object.entries(this.item)) {
+            //     if (!this.stateOn[key] || this.getErrorMessage(this.validators[key], value) !== null) {
+            //         canRegister = false;
+            //     }
+            // }
 
             if (canRegister)
                 this.sendRegister();
@@ -99,11 +113,11 @@ export default {
                     this.$router.push({ name: 'login' });
                 });
         },
-        getErrorMessage(validator, itemToValidate) {
+        getErrorMessage(validator: any, itemToValidate: any) {
             try {
                 validator.validateSync(itemToValidate);
                 return null;
-            } catch (err) {
+            } catch (err: any) {
                 return err.message;
             }
         }

@@ -33,7 +33,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import passwordStrength from '@/utils/passwordStrength'
 
 export default {
@@ -52,7 +52,7 @@ export default {
                 .then(() => {
                     this.$router.push({ name: 'login' });
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     console.log('error', error);
                 })
         }

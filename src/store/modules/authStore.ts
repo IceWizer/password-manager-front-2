@@ -9,7 +9,7 @@ export default ({
 
     },
     actions: {
-        register({ commit }, payload) {
+        register({ commit }: any, payload: any) {
             return apiRequest(
                 'auth/register',
                 'POST',
@@ -17,7 +17,7 @@ export default ({
                 payload
             )
         },
-        login({ commit }, payload) {
+        login({ commit }: any, payload: any) {
             return apiRequest(
                 'auth/login',
                 'POST',
@@ -25,7 +25,7 @@ export default ({
                 payload
             )
         },
-        verifyEmail({ commit }, payload) {
+        verifyEmail({ commit }: any, payload: any) {
             return apiRequest(
                 `auth/verify-email/${payload.token}`,
                 'POST',
@@ -33,7 +33,7 @@ export default ({
                 null
             )
         },
-        forgotPassword({ commit }, payload) {
+        forgotPassword({ commit }: any, payload: any) {
             return apiRequest(
                 `auth/forgot-password`,
                 'POST',
@@ -41,7 +41,7 @@ export default ({
                 payload
             )
         },
-        resetPassword({ commit }, payload) {
+        resetPassword({ commit }: any, payload: any) {
             return apiRequest(
                 `auth/reset-password/${payload.token}`,
                 'POST',
@@ -49,7 +49,7 @@ export default ({
                 { password: payload.password }
             )
         },
-        logout({ commit }) {
+        logout({ commit }: any) {
             return apiRequest(
                 'auth/logout',
                 'POST',
@@ -59,7 +59,7 @@ export default ({
         }
     },
     getters: {
-        getUser(state) {
+        getUser(state: { user: any; }) {
             return state.user;
         }
     },

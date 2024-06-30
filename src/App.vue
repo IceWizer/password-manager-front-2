@@ -1,6 +1,8 @@
 <template class="my-auto">
-  <Navbar v-if="showNavbar" />
-  <RouterView class=" my-auto" />
+  <div id="app">
+    <Navbar v-if="showNavbar" />
+    <RouterView class=" my-auto" />
+  </div>
 </template>
 
 <style scoped></style>

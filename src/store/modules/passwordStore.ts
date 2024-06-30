@@ -5,7 +5,7 @@ const model = "passwords";
 
 const { name, store } = useCrud(model);
 
-store.actions.fetchItems = ({ commit }, payload) => {
+store.actions.fetchItems = ({ commit }: any, payload: any) => {
     return apiRequest(
         model,
         'GET',
@@ -14,7 +14,7 @@ store.actions.fetchItems = ({ commit }, payload) => {
     )
 };
 
-store.actions.fetchSharedItems = ({ commit }, payload) => {
+store.actions.fetchSharedItems = ({ commit }: any, payload: any) => {
     return apiRequest(
         `${model}/shared`,
         'GET',
@@ -22,7 +22,7 @@ store.actions.fetchSharedItems = ({ commit }, payload) => {
         payload
     )
 };
-store.actions.fetchItems = ({ commit }, payload) => {
+store.actions.fetchItems = ({ commit }: any, payload: any) => {
     return apiRequest(
         model,
         'GET',
@@ -31,7 +31,7 @@ store.actions.fetchItems = ({ commit }, payload) => {
     )
 };
 
-store.actions.showPassword = ({ commit }, payload) => {
+store.actions.showPassword = ({ commit }: any, payload: any) => {
     return apiRequest(
         `${model}/${payload.id}/1234`,
         'GET',

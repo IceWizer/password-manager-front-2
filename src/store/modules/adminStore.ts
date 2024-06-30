@@ -6,7 +6,7 @@ export default ({
     mutations: {
     },
     actions: {
-        fetchPasswords({ commit }, payload) {
+        fetchPasswords({ commit }: any, payload: any) {
             return apiRequest(
                 "admin/passwords",
                 "GET",

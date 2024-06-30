@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import connection from "@/auth/utils/connection";
 
 export default {
@@ -21,11 +21,11 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch('auth_store/logout')
-                .then((response) => {
+                .then((response: any) => {
                     connection.logout();
                     this.$router.push({ name: 'login' });
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     console.log(error);
                 });
         }

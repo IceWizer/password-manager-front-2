@@ -1,12 +1,12 @@
 <template>
     <div class="collapse bg-base-200 shadow-xl">
         <input type="radio" name="accordeon-password" />
-        <div class="collapse-title text-xl font-medium">{{ password.label }}</div>
+        <div class="collapse-title text-xl font-medium">{{ password?.label ?? "" }}</div>
         <div class="collapse-content">
             <div class="flex">
 
                 <input class="input input-bordered input-disabled mx-2" :type="showPassword ? 'text' : 'password'"
-                    :value="showPassword ? password.password : 'password'">
+                    :value="showPassword ? (password?.password ?? '') : 'password'">
                 <div class="grid grid-cols-5  my-auto">
                     <div class="tooltip" data-tip="Copier" v-if="canSee">
                         <button class=" mx-2" @click="copyPassword"><font-awesome-icon
@@ -33,14 +33,14 @@
                     </div>
                 </div>
             </div>
-            <div v-if="password.comment" class="my-2">
+            <div v-if="password?.comment" class="my-2">
                 <p>{{ password.comment }}</p>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Password from '@/models/password';
 
 export default {
@@ -61,38 +61,42 @@ export default {
             showPassword: false,
         };
     },
-    emits: ['open-modal'],
+    emits: ['open-modal', 'fetch'],
     methods: {
         openModal() {
             this.$emit('open-modal', this.password);
         },
         showPasswordMethod() {
-            if (!!this.password.password === true) {
+            if (!!this.password?.password === true) {
                 this.showPassword = !this.showPassword;
             } else {
-                this.$store.dispatch('passwords_store/showPassword', { id: this.password.id, encryptionKey: "1234" })
-                    .then((response) => {
-                        this.$props.password.password = response.data;
-                        this.showPassword = !this.showPassword;
+                this.$store.dispatch('passwords_store/showPassword', { id: this.password?.id, encryptionKey: "1234" })
+                    .then((response: any) => {
+                        if (this.$props.password?.password !== null && this.$props.password?.password !== undefined) {
+                            this.$props.password.password = response?.data;
+                            this.showPassword = !this.showPassword;
+                        }
                     });
             }
         },
         copyPassword() {
-            if (!!this.password.password === true) {
+            if (!!this.password?.password === true) {
                 navigator.clipboard.writeText(this.password.password);
             } else {
-                this.$store.dispatch('passwords_store/showPassword', { id: this.password.id, encryptionKey: "1234" })
-                    .then((response) => {
-                        this.$props.password.password = response.data;
-                        navigator.clipboard.writeText(this.password.password);
+                this.$store.dispatch('passwords_store/showPassword', { id: this.password?.id, encryptionKey: "1234" })
+                    .then((response: any) => {
+                        if (this.$props.password?.password !== null && this.$props.password?.password !== undefined) {
+                            this.$props.password.password = response.data;
+                            navigator.clipboard.writeText(this.password?.password ?? "");
+                        }
                     });
             }
         },
         edit() {
-            this.$router.push({ name: 'password-create-edit', params: { id: this.password.id } });
+            this.$router.push({ name: 'password-create-edit', params: { id: this.password?.id } });
         },
         deletePassword() {
-            this.$store.dispatch('passwords_store/deleteItem', { id: this.password.id })
+            this.$store.dispatch('passwords_store/deleteItem', { id: this.password?.id })
                 .then(() => {
                     this.$emit('fetch');
                 });

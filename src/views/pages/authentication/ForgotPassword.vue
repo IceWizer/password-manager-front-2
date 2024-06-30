@@ -4,7 +4,7 @@
             <h1 class="text-center text-2xl">Mot de passe oublié</h1>
             <div class="w-full mx-auto ">
                 <div class="my-5">
-                    <form class="w-full text-center" @submit.prevent="submitForm" >
+                    <form class="w-full text-center" @submit.prevent="submitForm">
                         <label for="email" class="input input-bordered flex items-center gap-2">
                             <font-awesome-icon :icon="['fas', 'envelope']" />
                             <input type="email" placeholder="Email" id="email" v-model="email" required>
@@ -18,7 +18,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     data() {
         return {

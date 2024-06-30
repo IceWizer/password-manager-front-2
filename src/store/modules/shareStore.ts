@@ -5,7 +5,7 @@ const model = "shares";
 
 const { name, store } = useCrud(model);
 
-store.actions.createItems = async (context, payload) => {
+store.actions.createItems = (context: any, payload: any): Promise<unknown> => {
     return apiRequest(
         `${model}/create-items`,
         "POST",
