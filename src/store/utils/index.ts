@@ -1,3 +1,3 @@
-import useCrud from '@store/utils/useCrud'
+import useCrud from '@/store/utils/useCrud'
 
 export { useCrud}

@@ -9,15 +9,18 @@ WORKDIR /app
 RUN npm ci
 COPY . /app
 
-RUN npm run build-only && \
+RUN npm run build && \
     rm -rf node_modules
 
 CMD ["npm", "run", "start"]
 
 FROM httpd:2.4 as prod-web
 
-COPY --from=app /app/dist /usr/local/apache2/htdocs/
+COPY --from=app /app /usr/local/apache2/htdocs
 COPY --from=app /app/.docker/web/conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+
+RUN rm -rf /usr/local/apache2/htdocs/.env && \
+    rm -rf /usr/local/apache2/htdocs/.env.*
 
 EXPOSE 80
 

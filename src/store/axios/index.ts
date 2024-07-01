@@ -1,12 +1,5 @@
 import axios from "axios";
 import useJwt from "../../auth/utils/useJwt";
-interface CustomWindow extends Window {
-    env: {
-      API_URL: string;
-    };
-  }
-  
-  declare const window: CustomWindow;
 
 const apiRequest = (
     url: string,
@@ -19,8 +12,10 @@ const apiRequest = (
             'Authorization': 'Bearer ' + useJwt.getJwt(),
         }
 ) => {
+
     
-    url = window.env.API_URL + url;
+    url = import.meta.env.VITE_API_URL + url;
+    console.log(import.meta.env, import.meta.env.VITE_API_URL, url);
 
     const methods: string[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 

@@ -13,7 +13,8 @@ export default defineConfig(({ command, mode }) => {
     return {
       // vite config
       define: {
-        env: JSON.stringify(env),
+        __VITE_BASE_URL__: JSON.stringify(env.VITE_BASE_URL),
+        __VITE_API_URL__: JSON.stringify(env.VITE_API_URL),
       },
 
       plugins: [
@@ -45,7 +46,8 @@ export default defineConfig(({ command, mode }) => {
     return {
       // vite config
       define: {
-        env: JSON.stringify(env),
+        __VITE_BASE_URL__: JSON.stringify(env.VITE_BASE_URL),
+        __VITE_API_URL__: JSON.stringify(env.VITE_API_URL),
       },
   
       plugins: [

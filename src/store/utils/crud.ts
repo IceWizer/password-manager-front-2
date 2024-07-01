@@ -1,5 +1,5 @@
 import { apiRequest } from '../axios'
-import type { CrudBaseStore } from '@store/utils/types'
+import type { CrudBaseStore } from '@/store/utils/types'
 
 export default (modelName: string) : CrudBaseStore => {
   return {
@@ -16,7 +16,7 @@ export default (modelName: string) : CrudBaseStore => {
       }
     },
     mutations: {
-      SET_ITEMS(state, payload) {
+      SET_ITEMS(state: any, payload: any) {
         // Find items in state.items that are in payload
         // and update them
         // Set updated items to state.items
@@ -43,7 +43,7 @@ export default (modelName: string) : CrudBaseStore => {
         }
         state.pagination.total = payload['hydra:totalItems']
       },
-      SET_ITEM(state, payload) {
+      SET_ITEM(state: any, payload: any) {
         // Find item in state.items that is in payload
         // and update it
         // Set updated item to state.item
@@ -64,7 +64,7 @@ export default (modelName: string) : CrudBaseStore => {
       }
     },
     actions: {
-      fetchItems({ commit }, payload) {
+      fetchItems({ commit }: any, payload: any) {
         return apiRequest(
           modelName,
           'GET',
@@ -74,7 +74,7 @@ export default (modelName: string) : CrudBaseStore => {
           payload
         )
       },
-      fetchItem({ commit }, payload) {
+      fetchItem({ commit }: any, payload: any) {
         // Delete id from payload
         const params = { ...payload }
         delete params.id
@@ -88,7 +88,7 @@ export default (modelName: string) : CrudBaseStore => {
           params
         )
       },
-      createItem({ commit }, payload) {
+      createItem({ commit }: any, payload: any) {
         return apiRequest(
           modelName,
           'POST',
@@ -98,7 +98,7 @@ export default (modelName: string) : CrudBaseStore => {
           payload
         )
       },
-      updateItem({ commit }, payload) {
+      updateItem({ commit }: any, payload: any) {
         return apiRequest(
           modelName + '/' + payload.id,
           'PUT',
@@ -108,7 +108,7 @@ export default (modelName: string) : CrudBaseStore => {
           payload
         )
       },
-      deleteItem({ commit }, payload) {
+      deleteItem({ commit }: any, payload: any) {
         return apiRequest(
           modelName + '/' + payload.id,
           'DELETE',
@@ -120,13 +120,13 @@ export default (modelName: string) : CrudBaseStore => {
       }
     },
     getters: {
-      getItems(state) {
+      getItems(state: any) {
         return state.items
       },
-      getItem(state) {
+      getItem(state: any) {
         return state.item
       },
-      getPagination(state) {
+      getPagination(state: any) {
         return state.pagination
       }
     }

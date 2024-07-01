@@ -1,5 +1,5 @@
 
-import { apiRequest } from "@store/axios";
+import { apiRequest } from "@/store/axios";
 
 export default ({
     state: {

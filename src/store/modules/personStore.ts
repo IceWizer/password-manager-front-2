@@ -1,4 +1,4 @@
-import { useCrud } from "@store/utils";
+import { useCrud } from "@/store/utils";
 
 const model = "people";
 
